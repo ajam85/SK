@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "combinations": {
+      ".read": "auth != null",
+      "$id": {
+        ".write": "auth != null && newData.exists() && (!data.exists() || newData.child('updatedAt').val() > data.child('updatedAt').val() || (newData.child('updatedAt').val() == data.child('updatedAt').val() && newData.child('updatedBy').val() >= data.child('updatedBy').val())) && newData.child('updatedBy').val() == auth.uid",
+        ".validate": "$id.matches(/^[0-9]{1,6}$/) && newData.hasChildren(['status', 'note', 'author', 'updatedAt', 'updatedBy']) && newData.child('status').isString() && (newData.child('status').val() == 'POSITIVE' || newData.child('status').val() == 'NEGATIVE') && newData.child('note').isString() && newData.child('note').val().length <= 2000 && newData.child('author').isString() && newData.child('author').val().length <= 256 && newData.child('updatedAt').isNumber() && newData.child('updatedAt').val() >= 0 && newData.child('updatedAt').val() <= now + 300000 && newData.child('updatedBy').isString() && newData.child('updatedBy').val() == auth.uid"
+      }
+    }
+  }
+}
